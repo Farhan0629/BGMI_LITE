@@ -1,0 +1,20 @@
+{
+  "name": "frontier-strike",
+  "version": "1.0.0",
+  "private": true,
+  "description": "FRONTIER STRIKE - an original browser-based 3D tactical shooter (WebGL2, zero runtime dependencies).",
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/dev-server.mjs",
+    "start": "node scripts/dev-server.mjs",
+    "serve": "node scripts/dev-server.mjs",
+    "typecheck": "tsc -p tsconfig.json",
+    "server": "node server/GameServer.js"
+  },
+  "engines": { "node": ">=18" },
+  "devDependencies": {
+    "typescript": "^5.5.0"
+  },
+  "keywords": ["webgl2", "shooter", "game", "browser", "frontier-strike"],
+  "license": "MIT"
+}
