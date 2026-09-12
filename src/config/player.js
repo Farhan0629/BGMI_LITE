@@ -26,17 +26,26 @@ export const PLAYER = {
 	fallDamagePerSpeed: 3.4,
 
 	camera: {
+		/** Spring-arm length per stance. */
 		distance: 3.5,
 		adsDistance: 1.9,
 		sprintDistance: 4.1,
-		shoulderOffset: 0.72,
-		heightOffset: 1.55,
-		crouchHeightOffset: 1.05,
-		minPitch: -1.2,
-		maxPitch: 1.25,
+		deathDistance: 5.4,
+		minDistance: 0.55,
+		/** Over-the-shoulder lateral offset. */
+		shoulder: 0.72,
+		adsShoulder: 0.5,
+		/** Pivot height above the character's feet. */
+		height: 1.55,
+		crouchHeight: 1.08,
+		deathHeight: -0.6,
+		pitchLimit: 1.2,
+		collisionPad: 0.3,
+		/** Camera shake tuning (configurable from the settings menu). */
+		shakeAmount: 0.16,
+		shakeDecay: 2.8,
 		followRate: 18,
 		zoomRate: 9,
-		collisionPadding: 0.3,
 	},
 
 	healItems: {

@@ -1,6 +1,9 @@
 /**
  * Weapon balance table. Adding a weapon here makes it available to the player,
  * to bots and to the loot system - no other code changes required.
+ *
+ * `model` drives the procedural weapon mesh built by the character rig
+ * (length in metres, optional wooden furniture, scope and muzzle device).
  */
 export const WEAPONS = {
 	ar_vanguard: {
@@ -13,6 +16,7 @@ export const WEAPONS = {
 		reloadTime: 2.1, switchTime: 0.5, projectileSpeed: 0,
 		adsFovScale: 0.72, scoped: false, loudness: 120,
 		muzzleFlash: 1, shakeAmount: 0.5, moveSpeedScale: 0.96,
+		model: { length: 0.98, color: [0.16, 0.17, 0.17], muzzle: true },
 	},
 	smg_hornet: {
 		id: "smg_hornet", name: "HORNET SMG-9", shortName: "SMG",
@@ -24,6 +28,7 @@ export const WEAPONS = {
 		reloadTime: 1.8, switchTime: 0.4, projectileSpeed: 0,
 		adsFovScale: 0.8, scoped: false, loudness: 95,
 		muzzleFlash: 0.8, shakeAmount: 0.35, moveSpeedScale: 1,
+		model: { length: 0.72, color: [0.14, 0.14, 0.15] },
 	},
 	shotgun_breaker: {
 		id: "shotgun_breaker", name: "BREAKER 12G", shortName: "SHOTGUN",
@@ -35,6 +40,7 @@ export const WEAPONS = {
 		reloadTime: 2.9, switchTime: 0.55, projectileSpeed: 0,
 		adsFovScale: 0.88, scoped: false, loudness: 130,
 		muzzleFlash: 1.6, shakeAmount: 1, moveSpeedScale: 0.94,
+		model: { length: 1.04, color: [0.19, 0.18, 0.18], wood: true },
 	},
 	sniper_longbow: {
 		id: "sniper_longbow", name: "LONGBOW .308", shortName: "SNIPER RIFLE",
@@ -46,6 +52,7 @@ export const WEAPONS = {
 		reloadTime: 3.2, switchTime: 0.7, projectileSpeed: 480,
 		adsFovScale: 0.32, scoped: true, loudness: 170,
 		muzzleFlash: 1.4, shakeAmount: 1.2, moveSpeedScale: 0.9,
+		model: { length: 1.26, color: [0.15, 0.15, 0.16], wood: true, scope: true, muzzle: true },
 	},
 	pistol_sidewinder: {
 		id: "pistol_sidewinder", name: "SIDEWINDER P9", shortName: "PISTOL",
@@ -57,6 +64,7 @@ export const WEAPONS = {
 		reloadTime: 1.5, switchTime: 0.3, projectileSpeed: 0,
 		adsFovScale: 0.85, scoped: false, loudness: 85,
 		muzzleFlash: 0.7, shakeAmount: 0.3, moveSpeedScale: 1.02,
+		model: { length: 0.4, color: [0.13, 0.13, 0.14] },
 	},
 	melee_talon: {
 		id: "melee_talon", name: "TALON BLADE", shortName: "MELEE",
@@ -68,6 +76,7 @@ export const WEAPONS = {
 		reloadTime: 0, switchTime: 0.25, projectileSpeed: 0,
 		adsFovScale: 1, scoped: false, loudness: 6,
 		muzzleFlash: 0, shakeAmount: 0.25, moveSpeedScale: 1.06,
+		model: { length: 0.34, color: [0.55, 0.57, 0.6] },
 	},
 }
 

@@ -23,10 +23,15 @@ export const QUALITY = {
 	},
 }
 
+export const QUALITY_NAMES = Object.keys(QUALITY)
+
 export const RENDER = {
 	near: 0.12,
 	far: 1400,
+	/** Field of view in degrees for each camera state. */
 	baseFov: 74,
+	adsFov: 54,
+	sprintFov: 80,
 	/** Maximum dynamic point lights uploaded per frame. */
 	maxLights: 8,
 	exposure: 1.05,
