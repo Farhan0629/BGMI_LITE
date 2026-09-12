@@ -35,6 +35,8 @@ export class World {
 		this.scene.waterLevel = WATER_LEVEL
 		this.props = new PropBuilder(this)
 		this.radius = islandRadius()
+		/** Scratch array reused by spatial queries to avoid per-call garbage. */
+		this.queryScratch = []
 	}
 
 	// ------------------------------------------------------------- sampling
@@ -150,6 +152,7 @@ export class World {
 	buildSpawnRing() {
 		this.spawns.length = 0
 		const wanted = 40
+		const pad = 2.5
 		let guard = 0
 		while (this.spawns.length < wanted && guard++ < 600) {
 			const p = this.randomLandPoint(null)
@@ -158,7 +161,16 @@ export class World {
 				if (Math.hypot(s.x - p.x, s.z - p.z) < 55) { ok = false; break }
 			}
 			if (!ok) continue
-			if (this.collision.queryRegion(p.x, p.z, 2.5).length > 0) continue
+			// Reject spawn points that overlap solid geometry. queryRegion takes
+			// an AABB in the XZ plane plus a reusable output array.
+			const blockers = this.collision.queryRegion(
+				p.x - pad, p.z - pad, p.x + pad, p.z + pad, this.queryScratch)
+			if (blockers.length > 0) continue
+			this.spawns.push({ x: p.x, z: p.z })
+		}
+		// Guarantee at least one spawn so a degenerate world still deploys.
+		if (this.spawns.length === 0) {
+			const p = this.randomLandPoint(null)
 			this.spawns.push({ x: p.x, z: p.z })
 		}
 	}
@@ -228,7 +240,7 @@ export class World {
 			prev = { x, z }
 		}
 		this.vehicleSpawns.push({ x: region.x + 30, z: region.z + 40 })
-		this.pois.push({ x: region.x, z: region.z, label: region.label, height: 20, major: true })
+		this.pois.push({ x: region.x, z: region.z, label: region.label, name: region.label, height: 20, major: true })
 	}
 
 	buildMilitary(region) {
@@ -291,7 +303,7 @@ export class World {
 			P.lootSpawn(region.x + rng.range(-16, 16), region.z + rng.range(-16, 16), "military")
 		}
 		this.vehicleSpawns.push({ x: region.x - 70, z: region.z + 70 })
-		this.pois.push({ x: region.x, z: region.z, label: region.label, height: 20, major: true })
+		this.pois.push({ x: region.x, z: region.z, label: region.label, name: region.label, height: 20, major: true })
 	}
 
 	buildIndustrial(region) {
@@ -340,7 +352,7 @@ export class World {
 		}
 		P.roadStrip(region.x, region.z - 90, 180, Math.PI / 2, 10)
 		this.vehicleSpawns.push({ x: region.x - 60, z: region.z - 60 })
-		this.pois.push({ x: region.x, z: region.z, label: region.label, height: 18, major: true })
+		this.pois.push({ x: region.x, z: region.z, label: region.label, name: region.label, height: 18, major: true })
 	}
 
 	buildForest(region) {
@@ -379,7 +391,7 @@ export class World {
 			const p = this.randomLandPoint(region)
 			P.lootSpawn(p.x, p.z, "wild")
 		}
-		this.pois.push({ x: region.x, z: region.z, label: region.label, height: 14, major: true })
+		this.pois.push({ x: region.x, z: region.z, label: region.label, name: region.label, height: 14, major: true })
 	}
 
 	buildMountain(region) {
@@ -412,7 +424,7 @@ export class World {
 			const p = this.randomLandPoint(region)
 			P.crate(p.x, p.z)
 		}
-		this.pois.push({ x: region.x, z: region.z, label: region.label, height: 46, major: true })
+		this.pois.push({ x: region.x, z: region.z, label: region.label, name: region.label, height: 46, major: true })
 	}
 
 	buildCoast(region) {
@@ -446,7 +458,7 @@ export class World {
 			P.lootSpawn(p.x, p.z, "wild")
 		}
 		this.vehicleSpawns.push({ x: region.x + 40, z: region.z - 40 })
-		this.pois.push({ x: region.x, z: region.z, label: region.label, height: 6, major: true })
+		this.pois.push({ x: region.x, z: region.z, label: region.label, name: region.label, height: 6, major: true })
 	}
 
 	/** Detail between the named regions so the island never feels empty. */
